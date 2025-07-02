@@ -12,16 +12,17 @@
             <h3 class="mb-4 text-lg font-medium text-gray-100">Template yang Saya Buat</h3>
 
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-
+                
                 <a href="{{ route('templates.create') }}"
                    class="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-slate-700 bg-slate-900/50 text-slate-400 transition hover:border-slate-600 hover:text-white aspect-square">
                     <i class="fa-solid fa-plus text-4xl"></i>
                     <span class="mt-2 font-semibold">Tambah Tier List</span>
                 </a>
 
+                {{-- LOOP UNTUK MENAMPILKAN TEMPLATE YANG SUDAH ADA --}}
                 @forelse($myTemplates as $template)
                     <div class="group relative aspect-square">
-                        <a href="{{ route('templates.edit', $template) }}">
+                        <a href="{{ route('ranking.show', $template) }}">
                             <img src="{{ $template->cover_image_path ? asset('storage/' . $template->cover_image_path) : 'https://via.placeholder.com/300/1e293b/FFFFFF?text=ETHERLIST' }}"
                                  alt="{{ $template->title }}"
                                  class="w-full h-full object-cover rounded-lg group-hover:opacity-75 transition-opacity">
@@ -45,6 +46,7 @@
                         </div>
                     </div>
                 @empty
+                
                 @endforelse
             </div>
 

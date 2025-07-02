@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TierListTemplateController;
 use App\Http\Controllers\TemplateItemController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RankingController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,7 +20,12 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/templates/{template}/items', [TemplateItemController::class, 'store'])->name('items.store');
     Route::delete('/items/{item}', [TemplateItemController::class, 'destroy'])->name('items.destroy');
-
+    
+    // Pindahkan Route::resource ke bawah
+    Route::get('/ranking/{template}', [RankingController::class, 'show'])->name('ranking.show');
+    Route::post('/ranking/{template}', [RankingController::class, 'store'])->name('ranking.store');
+    
+    // Letakkan Route::resource di bagian akhir dalam grup
     Route::resource('templates', TierListTemplateController::class);
 });
 
