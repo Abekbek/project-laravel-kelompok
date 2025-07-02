@@ -1,102 +1,96 @@
 <x-app-layout>
-    
     <x-slot name="head_styles">
         <style>
-            html, body {
-                overflow: hidden;
+            .item.draggable, .sortable-fallback {
+                position: relative;
+                background-size: cover;
+                background-position: center;
+                border: 1px solid #4A5568;
             }
-            .page-content-wrapper {
-                height: 100vh;
-                overflow-y: auto;
-                padding-bottom: 200px;
-            }
+            .sortable-ghost { opacity: 0.4; background: #4f46e5; }
         </style>
     </x-slot>
 
-    {{-- Wrapper untuk konten yang bisa di-scroll --}}
-    <div class="page-content-wrapper">
-        <x-slot name="header">
-            <div class="flex flex-wrap items-center justify-between gap-4">
-                <h2 class="font-semibold text-xl text-gray-200 leading-tight truncate">
-                    {{ $template->title }}
-                </h2>
-                <div class="flex items-center space-x-2 flex-shrink-0">
-                    <button id="download-button" class="inline-flex items-center gap-x-2 rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 transition-colors">
-                        <i class="fa-solid fa-download fa-sm"></i><span>Download</span>
-                    </button>
-                    <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-x-2 rounded-md bg-slate-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-600 transition-colors">
-                        <i class="fa-solid fa-arrow-left fa-sm"></i><span>Kembali</span>
-                    </a>
-                </div>
-            </div>
-        </x-slot>
-
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div id="tierlist-capture-area" class="bg-slate-950 p-4">
-                    <h2 class="text-3xl font-bold text-white text-center mb-6">{{ $template->title }}</h2>
-                    <div id="tier-grid">
-                        @foreach($template->tierRows as $row)
-                            <div class="flex items-stretch mb-1">
-                                {{-- 1. Tambahkan class h-24 agar tinggi & lebar sama (jadi kotak) dan perbesar font --}}
-                                <div class="w-32 h-28 flex-shrink-0 flex items-center justify-center font-bold text-black text-2xl" style="background-color: {{ $row->color }}; text-shadow: 0 0 2px rgba(255,255,255,0.7);">
-                                    {{ $row->label }}
-                                </div>
-                                {{-- 2. Sesuaikan min-height di sini menjadi min-h-24 agar pas dengan kotak label & gambar --}}
-                                <div class="tier-items sortable-list flex-grow flex flex-wrap items-center gap-2 p-2 bg-slate-800 min-h-24" data-tier-id="{{ $row->id }}"></div>
-                            </div>
-                        @endforeach
+    <div id="capture-area" class="bg-slate-950 pt-8 pb-4">
+        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
+            <h2 class="font-bebas text-5xl text-center text-white tracking-wider mb-6">
+                {{ $template->title }}
+            </h2>
+            <div id="tier-container" class="space-y-px">
+                @foreach($template->tierRows as $row)
+                <div class="tier-row flex items-stretch min-h-[96px] bg-slate-800 shadow-lg">
+                    <div class="tier-label text-black font-bebas text-3xl w-24 flex-shrink-0 flex items-center justify-center" style="background-color: {{ $row->color }};">
+                        {{ $row->label }}
                     </div>
+                    <div class="tier-dropzone sortable-list flex-grow p-1 flex flex-wrap content-start items-start gap-1"></div>
                 </div>
+                @endforeach
             </div>
         </div>
     </div>
 
-    <div class="fixed bottom-0 z-50 w-full bg-slate-900/80 backdrop-blur-sm border-t border-slate-700 p-4">
-        {{-- Kita jadikan div pembungkus ini sebagai item-pool --}}
-        <div id="item-pool" class="sortable-list min-h-[100px] max-w-7xl mx-auto flex flex-wrap gap-2 justify-center">
-            @foreach($template->items as $item)
-                {{-- Loop ini hanya untuk item yang belum di-ranking --}}
-                @if(!isset($ranked_items) || !in_array($item->id, $ranked_items))
-                    <div class="rank-item" data-item-id="{{ $item->id }}">
-                        <img src="{{ asset('storage/' . $item->image_path) }}" alt="Item" class="w-24 h-24 object-cover rounded-md cursor-grab">
-                    </div>
-                @endif
-            @endforeach
-       </div>
+    <div id="item-pool-container" class="sticky bottom-0 z-20 w-full bg-slate-900 transition-all duration-300 border-t-2 border-slate-700">
+        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 py-4">
+            <h3 class="font-semibold text-xl text-white mb-3 px-1">Item Pool</h3>
+            <div id="item-pool" class="sortable-list p-1 flex flex-nowrap gap-2 min-h-[96px] overflow-x-auto">
+                @foreach($template->items as $item)
+                <div class="item draggable w-[88px] h-[88px] bg-cover bg-center cursor-move flex-shrink-0"
+                     style="background-image: url('{{ asset('storage/' . $item->image_path) }}')"
+                     data-item-id="{{ $item->id }}">
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 py-8">
+        <div class="mt-8 flex justify-center items-center gap-4">
+            <button id="download-btn" class="px-8 py-3 bg-green-600 text-white font-semibold rounded-full shadow-lg hover:bg-green-500 transition-colors">Download as PNG</button>
+        </div>
     </div>
 
     @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoVBL5gI9kDXrdIGNORE_THIS_PART_ofF3e4HRduIOPCLw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
 
-        const lists = document.querySelectorAll('.sortable-list');
-        lists.forEach(list => {
-            new Sortable(list, {
-                group: 'tierlist',
-                animation: 150,
-                ghostClass: 'opacity-50',
-            });
-        });
+        const sortableOptions = {
+            group: 'tier-list',
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            dragClass: 'sortable-drag',
+            forceFallback: true,
+            fallbackClass: 'sortable-fallback'
+        };
 
-        document.getElementById('download-button').addEventListener('click', function() {
-            const captureArea = document.getElementById('tierlist-capture-area');
-            const originalTitle = document.title;
-            document.title = 'etherlist-{{ Str::slug($template->title) }}'; // Untuk nama file
-            
+        document.querySelectorAll('.sortable-list').forEach(zone => new Sortable(zone, sortableOptions));
+
+        const downloadBtn = document.getElementById('download-btn');
+        downloadBtn.addEventListener('click', function() {
+            const captureArea = document.getElementById('capture-area');
+            const originalBtnText = downloadBtn.innerHTML;
+            downloadBtn.disabled = true;
+            downloadBtn.innerHTML = 'Membuat gambar...';
+
             html2canvas(captureArea, {
-                backgroundColor: '#020617', // Warna slate-950
-                useCORS: true, 
-                logging: false
+                backgroundColor: '#0f172a',
+                useCORS: true,
+                logging: false,
+                scale: 2
             }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = document.title + '.png';
+                link.download = '{{ Str::slug($template->title) }}-etherlist.png';
                 link.href = canvas.toDataURL('image/png');
                 link.click();
-                document.title = originalTitle; // Kembalikan judul asli
+            }).catch(function (error) {
+                console.error('Download Error:', error);
+                alert('Gagal membuat gambar.');
+            }).finally(function () {
+                downloadBtn.disabled = false;
+                downloadBtn.innerHTML = originalBtnText;
             });
         });
-
     });
     </script>
     @endpush
