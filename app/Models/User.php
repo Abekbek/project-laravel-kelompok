@@ -48,6 +48,6 @@ class User extends Authenticatable
 
     public function templates()
     {
-        return $this->hasMany(TierListTemplate::class);
+        return $this->hasMany(\App\Models\TierListTemplate::class);
     }
 }
