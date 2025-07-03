@@ -11,9 +11,10 @@ use App\Http\Controllers\SearchController;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 Route::get('/search', [SearchController::class, 'index'])->name('search');
+// ▼▼▼ ROUTE INI SEKARANG BERSIFAT PUBLIK ▼▼▼
 Route::get('/ranking/{template}', [RankingController::class, 'show'])->name('ranking.show');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
