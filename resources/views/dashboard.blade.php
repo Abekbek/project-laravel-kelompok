@@ -19,7 +19,6 @@
                     <span class="mt-2 font-semibold">Tambah Tier List</span>
                 </a>
 
-                {{-- LOOP UNTUK MENAMPILKAN TEMPLATE YANG SUDAH ADA --}}
                 @forelse($myTemplates as $template)
                     <div class="group relative aspect-square">
                         <a href="{{ route('ranking.show', $template) }}">

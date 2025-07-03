@@ -6,14 +6,16 @@ use App\Http\Controllers\TierListTemplateController;
 use App\Http\Controllers\TemplateItemController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RankingController;
+use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\SearchController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
+Route::get('/search', [SearchController::class, 'index'])->name('search');
+Route::get('/ranking/{template}', [RankingController::class, 'show'])->name('ranking.show');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -21,11 +23,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/templates/{template}/items', [TemplateItemController::class, 'store'])->name('items.store');
     Route::delete('/items/{item}', [TemplateItemController::class, 'destroy'])->name('items.destroy');
     
-    // Pindahkan Route::resource ke bawah
-    Route::get('/ranking/{template}', [RankingController::class, 'show'])->name('ranking.show');
     Route::post('/ranking/{template}', [RankingController::class, 'store'])->name('ranking.store');
     
-    // Letakkan Route::resource di bagian akhir dalam grup
     Route::resource('templates', TierListTemplateController::class);
 });
 
