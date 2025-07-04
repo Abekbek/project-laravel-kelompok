@@ -25,9 +25,10 @@
         {{ $head_styles }}
         @endif
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-slate-950">
+    <body class="font-sans antialiased flex flex-col min-h-screen bg-slate-950">
+        <div class="flex-grow">
             @include('layouts.navigation')
+
             @if (isset($header))
                 <header class="bg-slate-900 shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
@@ -36,10 +37,11 @@
                 </header>
             @endif
 
-            <main>
+            <main class="flex-grow px-4 py-10">
                 {{ $slot }}
             </main>
         </div>
+        @include('layouts.footer')
         <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
