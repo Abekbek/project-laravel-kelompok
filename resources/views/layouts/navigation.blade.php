@@ -1,16 +1,19 @@
 <nav x-data="{ open: false }" class="bg-slate-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
-            
+
             <div class="flex">
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ Auth::check() ? route('dashboard') : route('welcome') }}" class="flex items-center">
+                    <a href="{{ Auth::check() ? route('welcome') : route('welcome') }}" class="flex items-center">
                         <x-application-logo class="block h-10 w-10" />
                         <span class="ms-3 text-xl font-semibold text-gray-200 hidden md:block">ETHERLIST</span>
                     </a>
                 </div>
                 @auth
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')">
+                        {{ __('Beranda') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
@@ -82,6 +85,9 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         @auth
             <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')">
+                    {{ __('Beranda') }}
+                </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
@@ -89,6 +95,7 @@
                     {{ __('Buat Tier List') }}
                 </x-responsive-nav-link>
             </div>
+
             <div class="pt-4 pb-1 border-t border-gray-600">
                 <div class="px-4">
                     <div class="font-medium text-base text-gray-200">{{ Auth::user()->name }}</div>

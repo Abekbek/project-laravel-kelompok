@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+input:-webkit-autofill {
+    box-shadow: 0 0 0px 1000px #0f172a inset !important;
+    -webkit-text-fill-color: #e2e8f0 !important;
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    box-shadow: 0 0 0px 1000px #0f172a inset !important;
+    -webkit-text-fill-color: #e2e8f0 !important;
+    transition: background-color 9999s ease-in-out 0s;
+}

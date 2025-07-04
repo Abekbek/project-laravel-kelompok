@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>ETHERLIST - Buat Tier List Kerenmu</title>
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,800,900&display=swap" rel="stylesheet" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="antialiased font-sans bg-slate-950">
-        <div class="relative min-h-screen">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ETHERLIST</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/etherlist.png') }}">
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,800,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body class="antialiased font-sans bg-slate-950">
+    <div class="relative min-h-screen">
+        {{-- Navigasi --}}
+        <div class="bg-slate-900">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center py-4 gap-4">
                     <div class="flex items-center flex-shrink-0">
@@ -27,7 +30,7 @@
                                     <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
                                 </div>
                                 <input type="search" name="q" placeholder="Cari template..."
-                                       class="block w-full rounded-md border-0 bg-slate-800 py-1.5 pl-10 text-gray-200 ring-1 ring-inset ring-slate-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6">
+                                    class="block w-full rounded-md border-0 bg-slate-800 py-1.5 pl-10 text-gray-200 ring-1 ring-inset ring-slate-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6">
                             </div>
                         </form>
                     </div>
@@ -46,51 +49,69 @@
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="relative h-96 w-full flex items-center justify-center overflow-hidden">
-                <img src="{{ asset('images/bg.webp') }}" alt="Background" class="absolute top-0 left-0 w-full h-full object-cover z-0">
-                
-                <div class="absolute top-0 left-0 w-full h-full bg-black/50 z-10"></div>
-                
-                <div class="relative z-20 text-center px-4">
-                    <h1 class="text-4xl md:text-6xl font-extrabold text-white" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.7);">
-                        Buat dan Bagikan <span class="text-indigo-400">Tier List</span> Kerenmu
-                    </h1>
-                    <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-200" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.8);">
-                        Dari game, film, anime, manga dan Tier List keren lainnya
-                    </p>
-                    <div class="mt-8">
-                        <a href="{{ route('register') }}" class="inline-block bg-white text-slate-900 font-bold text-lg px-8 py-4 rounded-lg hover:bg-gray-200 transition shadow-lg">
+        {{-- Hero Section Fullscreen --}}
+        <div class="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
+            <img src="{{ asset('images/bg.webp') }}" alt="Background" class="absolute top-0 left-0 w-full h-full object-cover z-0">
+            <div class="absolute top-0 left-0 w-full h-full bg-black/50 z-10"></div>
+            <div class="relative z-20 text-center px-4">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-white" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.7);">
+                    Buat dan Bagikan <span class="text-indigo-400">Tier List</span> Kerenmu
+                </h1>
+                <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-200" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.8);">
+                    Dari game, film, anime, manga dan Tier List keren lainnya
+                </p>
+                <div class="mt-8">
+                    @auth
+                        <a href="{{ route('templates.create') }}"
+                            class="inline-block text-indigo-400 font-bold text-lg hover:underline hover:underline-offset-4 transition duration-200"
+                            style="text-shadow: 0 0 1px black, 0 0 2px black;">
                             Mulai Membuat, Gratis!
                         </a>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Galeri Template Populer dengan background polos --}}
-            <div class="bg-slate-950">
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-16">
-                    <h2 class="text-3xl font-bold text-white mb-8">Template Populer</h2>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-                        @forelse($popularTemplates as $template)
-                            <div class="group relative aspect-square">
-                                <a href="{{ route('ranking.show', $template) }}">
-                                    <img src="{{ $template->cover_image_path ? asset('storage/' . $template->cover_image_path) : 'https://via.placeholder.com/300/1e293b/FFFFFF?text=ETHERLIST' }}"
-                                         alt="{{ $template->title }}"
-                                         class="w-full h-full object-cover rounded-lg group-hover:opacity-75 transition-opacity">
-                                </a>
-                                <div class="absolute inset-0 bg-black/20 rounded-lg"></div>
-                                <div class="absolute bottom-0 left-0 right-0 p-3 text-white">
-                                    <h4 class="font-bold truncate">{{ $template->title }}</h4>
-                                    <p class="text-xs text-gray-300 truncate">oleh {{ $template->user->name }}</p>
-                                </div>
-                            </div>
-                        @empty
-                            <p class="text-gray-500 col-span-full">Belum ada template yang bisa ditampilkan.</p>
-                        @endforelse
-                    </div>
+                    @else
+                        <a href="{{ route('register') }}"
+                            class="inline-block text-indigo-400 font-bold text-lg hover:underline hover:underline-offset-4 transition duration-200"
+                            style="text-shadow: 0 0 1px black, 0 0 2px black;">
+                            Mulai Membuat, Gratis!
+                        </a>
+                    @endauth
                 </div>
             </div>
         </div>
-    </body>
+
+        {{-- Galeri Template Populer --}}
+        <div class="bg-slate-950">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-16">
+                <h2 class="text-3xl font-bold text-white mb-8">Template Populer</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                    @forelse($popularTemplates as $template)
+                        <div class="group">
+                            <a href="{{ route('ranking.show', $template) }}" class="relative block aspect-square rounded-lg overflow-hidden group">
+                                <img
+                                    src="{{ $template->cover_image_path ? asset('storage/' . $template->cover_image_path) : 'https://via.placeholder.com/300/1e293b/FFFFFF?text=ETHERLIST' }}"
+                                    alt="{{ $template->title }}"
+                                    class="w-full h-full object-cover rounded-lg transition duration-300"
+                                >
+                                <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition duration-300 rounded-lg"></div>
+
+                                <div class="absolute bottom-0 left-0 p-2 z-10">
+                                    <h4 class="text-white text-sm font-semibold" style="text-shadow: 1px 1px 3px black;">
+                                        {{ $template->title }}
+                                    </h4>
+                                    <p class="text-xs text-gray-200" style="text-shadow: 1px 1px 3px black;">
+                                        oleh {{ $template->user->name }}
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    @empty
+                        <p class="text-gray-500 col-span-full">Belum ada template yang bisa ditampilkan.</p>
+                    @endforelse
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
