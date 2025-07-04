@@ -7,7 +7,20 @@
                 background-position: center;
                 border: 1px solid #4A5568;
             }
-            .sortable-ghost { opacity: 0.4; background: #4f46e5; }
+
+            .sortable-ghost {
+                opacity: 0.4;
+                background: #4f46e5;
+            }
+
+            .tier-label {
+                font-size: 1rem;
+                text-align: center;
+                padding: 0.5rem;
+                word-break: break-word;
+                overflow-wrap: break-word;
+                line-height: 1.2;
+            }
         </style>
     </x-slot>
 
