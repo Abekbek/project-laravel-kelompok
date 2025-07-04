@@ -13,7 +13,7 @@ class SearchController extends Controller
         $results = TierListTemplate::with('user')
                         ->where('title', 'like', "%{$query}%")
                         ->latest()
-                        ->paginate(20); // Batasi 20 hasil per halaman
+                        ->paginate(20);
 
         return view('search.results', [
             'results' => $results,
