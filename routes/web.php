@@ -8,6 +8,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RankingController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\UserController;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 Route::get('/search', [SearchController::class, 'index'])->name('search');
@@ -26,6 +28,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/ranking/{template}', [RankingController::class, 'store'])->name('ranking.store');
 
     Route::resource('templates', TierListTemplateController::class);
+});
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::resource('users', UserController::class)->except(['create', 'store', 'edit', 'update']);
 });
 
 require __DIR__.'/auth.php';
