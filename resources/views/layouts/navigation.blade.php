@@ -6,7 +6,7 @@
                 <div class="shrink-0 flex items-center">
                     <a href="{{ Auth::check() ? route('welcome') : route('welcome') }}" class="flex items-center">
                         <x-application-logo class="block h-10 w-10" />
-                        <span class="ms-3 text-xl font-semibold text-gray-200 hidden md:block">ETHERLIST</span>
+                        <span class="ms-3 text-xl font-semibold text-gray-300 hidden md:block">ETHERLIST</span>
                     </a>
                 </div>
                 @auth
@@ -20,6 +20,11 @@
                     <x-nav-link :href="route('templates.create')" :active="request()->routeIs('templates.create')">
                         {{ __('Buat Tier List') }}
                     </x-nav-link>
+                    @if(Auth::user()->is_admin)
+                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')">
+                            {{ __('Admin Panel') }}
+                        </x-nav-link>
+                    @endif
                 </div>
                 @endauth
             </div>
@@ -69,9 +74,9 @@
                         </x-slot>
                     </x-dropdown>
                 @else
-                    <a href="{{ route('login') }}" class="font-semibold text-gray-400 hover:text-white transition">Log in</a>
+                    <a href="{{ route('login') }}" class="font-semibold transition">Log in</a>
                     @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="ms-4 font-semibold text-gray-400 hover:text-white transition">Register</a>
+                        <a href="{{ route('register') }}" class="ms-4 font-semibold text-gray-200 hover:text-white transition">Register</a>
                     @endif
                 @endauth
             </div>

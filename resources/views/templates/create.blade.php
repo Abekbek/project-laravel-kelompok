@@ -27,7 +27,7 @@
                             {{-- Foto Sampul --}}
                             <div>
                                 <x-input-label for="cover_image" value="Foto Sampul (Opsional)" />
-                                <input id="cover_image" name="cover_image" type="file" accept="image/*" class="block w-full mt-1 text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-slate-700 file:text-gray-300 hover:file:bg-slate-600"/>
+                                <input id="cover_image" name="cover_image" type="file" accept="image/*" class="block w-full mt-1 text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-slate-800 file:text-gray-300 hover:file:bg-slate-600"/>
                                 <x-input-error :messages="$errors->get('cover_image')" class="mt-2" />
                             </div>
                         </div>
@@ -35,7 +35,10 @@
                         {{-- Deskripsi --}}
                         <div class="mt-6">
                             <x-input-label for="description" value="Deskripsi (Opsional)" />
-                            <textarea id="description" name="description" rows="4" class="block mt-1 w-full border-gray-700 bg-gray-900 text-gray-300 rounded-md shadow-sm">{{ old('description') }}</textarea>
+                            <textarea id="description" name="description" rows="4"
+                                class="block mt-1 w-full bg-slate-900 text-white border border-slate-700 rounded-md shadow-sm placeholder:text-gray-400">
+                                {{ old('description') }}
+                            </textarea>
                         </div>
 
                         {{-- Label Tier --}}
