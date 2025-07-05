@@ -35,10 +35,7 @@
                         {{-- Deskripsi --}}
                         <div class="mt-6">
                             <x-input-label for="description" value="Deskripsi (Opsional)" />
-                            <textarea id="description" name="description" rows="4"
-                                class="block mt-1 w-full bg-slate-900 text-white border border-slate-700 rounded-md shadow-sm placeholder:text-gray-400">
-                                {{ old('description') }}
-                            </textarea>
+                            <textarea id="description" name="description" rows="4" class="block mt-1 w-full bg-slate-900 text-white border border-slate-700 rounded-md shadow-sm placeholder:text-gray-400 align-top">{{ old('description') }}</textarea>
                         </div>
 
                         {{-- Label Tier --}}
