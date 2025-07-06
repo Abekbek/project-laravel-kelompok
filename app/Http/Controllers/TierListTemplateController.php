@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use App\Models\TierListTemplate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class TierListTemplateController extends Controller
 {
