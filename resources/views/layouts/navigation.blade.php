@@ -6,7 +6,7 @@
                 <div class="shrink-0 flex items-center">
                     <a href="{{ Auth::check() ? route('welcome') : route('welcome') }}" class="flex items-center">
                         <x-application-logo class="block h-10 w-10" />
-                        <span class="ms-3 text-xl font-semibold text-gray-300 hidden md:block">ETHERLIST</span>
+                        <span class="ml-3 text-2xl font-semibold text-white hidden md:block">ETHERLIST</span>
                     </a>
                 </div>
                 @auth
@@ -74,7 +74,7 @@
                         </x-slot>
                     </x-dropdown>
                 @else
-                    <a href="{{ route('login') }}" class="font-semibold transition">Log in</a>
+                    <a href="{{ route('login') }}" class="ms-4 font-semibold text-gray-200 hover:text-white transition">Log in</a>
                     @if (Route::has('register'))
                         <a href="{{ route('register') }}" class="ms-4 font-semibold text-gray-200 hover:text-white transition">Register</a>
                     @endif

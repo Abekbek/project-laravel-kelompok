@@ -40,9 +40,9 @@
                             @auth
                                 <a href="{{ url('/dashboard') }}" class="font-semibold text-gray-400 hover:text-white transition">Dashboard</a>
                             @else
-                                <a href="{{ route('login') }}" class="font-semibold text-gray-400 hover:text-white transition">Log in</a>
+                                <a href="{{ route('login') }}" class="ms-4 font-semibold text-gray-200 hover:text-white transition">Log in</a>
                                 @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-400 hover:text-white transition">Register</a>
+                                    <a href="{{ route('register') }}" class="ms-4 font-semibold text-gray-200 hover:text-white transition">Register</a>
                                 @endif
                             @endauth
                         @endif
@@ -86,13 +86,18 @@
                 <h2 class="text-3xl font-bold text-white mb-8">Template Populer</h2>
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                     @forelse($popularTemplates as $template)
-                        <div class="group">
-                            <a href="{{ route('ranking.show', $template) }}" class="relative block aspect-square rounded-lg overflow-hidden group">
-                                <img
-                                    src="{{ $template->cover_image_path ? asset('storage/' . $template->cover_image_path) : 'https://via.placeholder.com/300/1e293b/FFFFFF?text=ETHERLIST' }}"
-                                    alt="{{ $template->title }}"
-                                    class="w-full h-full object-cover rounded-lg transition duration-300"
-                                >
+                        <div class="group aspect-square overflow-hidden rounded-lg relative">
+                            <a href="{{ route('ranking.show', $template) }}" class="block w-full h-full relative">
+                                @if ($template->cover_image_path)
+                                    <img src="{{ asset('storage/' . $template->cover_image_path) }}"
+                                         alt="{{ $template->title }}"
+                                         class="w-full h-full object-cover rounded-lg group-hover:opacity-75 transition-opacity">
+                                @else
+                                    <div class="w-full h-full bg-slate-800 text-white flex items-center justify-center text-center rounded-lg text-lg font-semibold group-hover:opacity-75 transition-opacity">
+                                        NO COVER
+                                    </div>
+                                @endif
+
                                 <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition duration-300 rounded-lg"></div>
 
                                 <div class="absolute bottom-0 left-0 p-2 z-10">
