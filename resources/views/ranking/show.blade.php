@@ -25,6 +25,23 @@
             #scroll-left, #scroll-right {
                 backdrop-filter: blur(4px);
             }
+
+            @media (max-width: 640px) {
+                .tier-row {
+                    min-height: 64px !important;
+                }
+
+                .tier-label {
+                    font-size: 0.75rem !important;
+                    width: 64px !important;
+                }
+
+                .tier-dropzone .item {
+                    width: 64px !important;
+                    height: 64px !important;
+                }
+            }
+
         </style>
     </x-slot>
 

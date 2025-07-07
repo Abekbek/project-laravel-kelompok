@@ -7,21 +7,25 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-slate-900 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-slate-900 overflow-hidden shadow-sm">
                 <div class="p-6 text-gray-100">
-                    <table class="w-full text-sm text-left text-gray-300 user-datatable">
-                        <thead class="text-xs text-gray-400 uppercase bg-slate-700">
-                            <tr>
-                                <th class="px-4 py-3">ID</th>
-                                <th class="px-4 py-3">Nama</th>
-                                <th class="px-4 py-3">Email</th>
-                                <th class="px-4 py-3">Admin?</th>
-                                <th class="px-4 py-3">Bergabung</th>
-                                <th class="px-4 py-3" width="100px">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-gray-300 user-datatable min-w-[640px]">
+                            <thead class="text-xs text-gray-400 uppercase bg-slate-700">
+                                <tr>
+                                    <th class="px-4 py-3">ID</th>
+                                    <th class="px-4 py-3">Nama</th>
+                                    <th class="px-4 py-3">Email</th>
+                                    <th class="px-4 py-3">Admin?</th>
+                                    <th class="px-4 py-3">Bergabung</th>
+                                    <th class="px-4 py-3" width="100px">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -29,7 +33,6 @@
 
     @push('scripts')
     <script type="text/javascript">
-      // Script untuk inisialisasi DataTables
       $(function () {
         var table = $('.user-datatable').DataTable({
             processing: true,
@@ -46,7 +49,6 @@
         });
       });
 
-      // Fungsi JavaScript untuk menghapus user
       function deleteUser(id) {
             Swal.fire({
                 title: 'Anda Yakin?',
@@ -61,7 +63,6 @@
                 color: '#e5e7eb'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Menggunakan jQuery AJAX untuk mengirim request DELETE
                     $.ajax({
                         url: '/admin/users/' + id,
                         type: 'POST',
@@ -71,7 +72,6 @@
                         },
                         success: function(response) {
                             Swal.fire('Terhapus!', response.success, 'success');
-                            // Reload tabel DataTables setelah berhasil
                             $('.user-datatable').DataTable().ajax.reload(null, false);
                         },
                         error: function(response) {
@@ -83,5 +83,4 @@
         }
     </script>
     @endpush
-
 </x-app-layout>

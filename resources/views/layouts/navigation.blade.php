@@ -104,6 +104,11 @@
                 <x-responsive-nav-link :href="route('templates.create')" :active="request()->routeIs('templates.create')">
                     {{ __('Buat Tier List') }}
                 </x-responsive-nav-link>
+                @if(Auth::user()->is_admin)
+                <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')">
+                    {{ __('Admin Panel') }}
+                </x-responsive-nav-link>
+                @endif
             </div>
 
             <div class="pt-4 pb-1 border-t border-gray-600">
