@@ -35,7 +35,8 @@ class TierListTemplateController extends Controller
                 $template->tierRows()->create(['label' => trim($label), 'order' => $index, 'color' => $tierColors[$index % count($tierColors)]]);
             }
         }
-        return redirect()->route('dashboard')->with('success', 'Template berhasil dibuat!');
+        return redirect()->route('templates.edit', $template)
+                 ->with('success', 'Template berhasil dibuat! Upload Item untuk di ranking');
     }
 
     public function edit(TierListTemplate $template) {
